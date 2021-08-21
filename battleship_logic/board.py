@@ -13,6 +13,12 @@ class BattleshipBoard:
     def change_value(self, x, y, value):
         self.grid[y][x] = value
 
+    def check_ships_remaining(self):
+        for y in range(self.num_row):
+            for x in range(self.num_col):
+                if self.grid[y][x] == 1:
+                    return True
+        return False
 
     def to_string(self):
         for i in range(self.num_col):
