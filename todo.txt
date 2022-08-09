@@ -1,0 +1,16 @@
+Server
+- set up server connection:
+    - check if room exist, if not, dont join that room X
+    - check if room is full before joining X
+    - make it impossible to send to room, unless you are part of the room (now handle exception) X
+- implement the game logic:
+    - 
+    -
+    -
+    -
+
+
+Client:
+- pre-game area:
+    - set up a join room area
+    
