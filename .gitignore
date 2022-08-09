@@ -4,7 +4,7 @@ node_modules
 chat-example
 package-lock.json
 package.json
-
+todo.txt
 # Logs
 logs
 *.log
