@@ -13,12 +13,23 @@ class RoomManager {
         this.rooms.delete(room);
     }
 
-    generateNewRoom(){
-        var roomNumber = Math.floor(Math.random() * 1000000) + 1;
-        while (this.rooms.has(roomNumber)){
-            roomNumber = Math.floor(Math.random() * 1000000) + 1;
+    generateNewRoomId(){
+        var roomId = this.generateRandomRoomId();
+        while (this.rooms.has(roomId)){
+            roomId = this.generateRandomRoomId();
         }
-        return roomNumber.toString();
+        return roomId;
+    }
+
+    generateRandomRoomId(){
+        var idLenth = 6;
+        var roomId = "";
+        var validCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var validCharacterLength = validCharacter.length;
+        for (var i = 0; i < idLenth; i++){
+            roomId += validCharacter.charAt(Math.floor(Math.random() * validCharacterLength));
+        }
+        return roomId;
     }
 
     addSocketToRoom(room, socketId){
