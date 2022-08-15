@@ -2,7 +2,16 @@
 class RoomManager {
 
     constructor(){
-        this.rooms = new Map()
+        this.rooms = new Map();
+        this.socketToRom = new Map();
+    }
+
+    addSocket(socketId, room){
+        this.socketToRom.set(socketId, room);
+    }
+
+    getRoom(socketId){
+        return this.socketToRom.get(socketId);
     }
 
     addRoom(room){

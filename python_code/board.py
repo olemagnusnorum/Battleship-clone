@@ -2,12 +2,6 @@ from ship import ThreePieceShip, SmallL, BigL
 
 class Board:
 
-    """
-    Water: 0
-    ship: 1
-    Miss: 3
-    Hit: 4
-    """
     WATER = 0
     SHIP = 1
     MISS = 3

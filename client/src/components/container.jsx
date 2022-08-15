@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import React, {Component} from "react";
+import React from "react";
 import Lobby from './lobby';
 import Game from './game';
 import io from 'socket.io-client';
@@ -51,7 +51,8 @@ function Container() {
       roomNumber={roomNumber} 
       sendJoinRoom={sendJoinRoom}
       />}
-      {inGame && <Game roomNumber={roomNumber}/>}
+      {inGame && <Game roomNumber={roomNumber}
+      socket={socket}/>}
     </div>
   )
 }

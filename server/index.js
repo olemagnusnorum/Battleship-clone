@@ -10,6 +10,7 @@ app.use(cors());
 
 const socketManager = new SocketManager()
 
+
 const io = new Server(server, {
     cors: {
         origin : ["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -28,8 +29,26 @@ io.on('connection', (socket) => {
     });
 
     socket.on('send_message', (data) => {
-        socketManager.send_message(io, data, socket)
+        socketManager.send_message(io, socket, data)
     });
+
+    //needed connections
+    socket.on('initialize_game', (data) => {
+        socketManager.initializeGame(io, socket, data)
+    })
+
+    socket.on('rotate_ship', (data) => {
+        socketManager.rotateShip(io, socket, data);
+    });
+    
+    socket.on('place_ship', (data) => {
+        socketManager.placeShip(io, socket, data);
+    });
+
+    socket.on('place_missile', (data) => {
+        socketManager.placeMissile(io, socket, data)
+    });
+
 });
 
 server.listen(3000, () => {
