@@ -1,13 +1,15 @@
 import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
-
+import '../css/tile.css'
+import '..//css/playerBoard.css'
 
 function Game(props){
     
     const [board, setBoard] = useState(); 
-    const [shipsOffsets, setShipsOffsets] = useState();
+    const [shipsOffsets, setShipsOffsets] = useState([]);
     const [shipsPlaced, setShipPlaced] = useState(new Set());
+    const boards = [[0,0,0],[0,0,0],[0,0,0]]
     
     const rotateShip = () =>{
         console.log("sendt rotate");
@@ -58,6 +60,8 @@ function Game(props){
             props.socket.off("ship_rotated");
             props.socket.off("ship_placed");
         };
+
+        
     }, [props.socket, shipsOffsets, board]);
     
 
@@ -66,14 +70,43 @@ function Game(props){
         console.log(shipsOffsets)
     }
 
-    return(
-        <div>
-            <p>THIS IS THE GAME: {props.roomNumber}</p>
-            <button onClick={rotateShip}>ROTATE 1</button>
-            <button onClick={print}>board</button>
-            <button onClick={placeShip}>place ship</button>
-        </div>
-    )
+    if (board !== undefined) {
+        return(
+            <div>
+                <p>THIS IS THE GAME: {props.roomNumber}</p>
+                <button onClick={rotateShip}>ROTATE 1</button>
+                <button onClick={print}>board</button>
+                <button onClick={placeShip}>place ship</button>
+                <div className="playerBoard">
+                    {board.map((row, rowId) => {
+                        return(
+                            <div key={rowId}>
+                            {row.map(value => {
+                                    {switch(value){
+                                        case 0: 
+                                            return <div className="tileWater"></div>
+                                            case 1:
+                                                return <div className="tileShip"></div>
+                                            case 3:    
+                                                return <div className="tileMiss"></div>
+                                            case 4:    
+                                                return <div className="tileHit"></div>
+                                            case 5:    
+                                                return <div className="tileSunk"></div>
+                                    }}
+                                    <div className="tile"></div>
+                                })}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        );
+    } else {
+        return(
+            <p>LOADING</p>
+        );
+    }
     
 }
 
