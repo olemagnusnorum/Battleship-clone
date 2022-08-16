@@ -30,11 +30,11 @@ export class Player{
     }
 
     placeShip(coordinate, shipNumber){
-        console.log(coordinate)
         if (shipNumber < this.ships.length){
             var ship = this.ships[shipNumber];
             if (this.board.placeShip(coordinate, ship)){
-                return {"x": coordinate.x, "y":coordinate.y, "shipNumber": shipNumber};
+                console.log(this.board.board);
+                return {"board": this.board.board, "shipNumber": shipNumber};
             } else {
                 console.log("not a valid ship placement");
                 return {}

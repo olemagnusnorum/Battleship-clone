@@ -86,9 +86,8 @@ class SocketManager {
         var room = this.roomManager.getRoom(socket.id);
         var gameController = this.games.get(room);
         var coordinate = {x,y}
-        console.log(coordinate)
-        var placement = gameController.placeShip(socket.id, coordinate, shipNumber);
-        socket.emit('ship_placed', placement);
+        var newBoard = gameController.placeShip(socket.id, coordinate, shipNumber);
+        socket.emit('ship_placed', newBoard);
         if (gameController.allShipsPlaced(socket.id, gameController.opponentId.get(socket.id))){
             io.in(room).emit('placing_finnished');
         }

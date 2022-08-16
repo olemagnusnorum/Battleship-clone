@@ -34,7 +34,7 @@ export class Board {
 
         if (!ship.placed && this.checkLegalShipPlacement(placement)){
             for (var i = 0; i < placement.length; i++){
-                this.board[placement[i].y][placement[i].y] = this.SHIP;
+                this.board[placement[i].y][placement[i].x] = this.SHIP;
             }
         } else {
             return false

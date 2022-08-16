@@ -19,8 +19,8 @@ export class GameController{
 
     placeShip(playerId, coordinate, shipNumber){
         var player = this.players.get(playerId);
-        var placement = player.placeShip(coordinate, shipNumber);
-        return placement
+        var newBoard = player.placeShip(coordinate, shipNumber);
+        return newBoard
     }
 
     allShipsPlaced(playerId, opponentId){

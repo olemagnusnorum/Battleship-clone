@@ -1,0 +1,10 @@
+.boatContainer {
+    background-color: rgb(147, 58, 74);
+ 
+    text-align: center;
+}
+
+.boatContainer p{
+    display: inline-block;
+    
+}
