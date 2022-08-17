@@ -1,6 +1,33 @@
+.board{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .playerBoard {
     text-align: center;
-    
     background-color: blue;
     font-size: 0;
   }
+.playerBoard>div{
+  display: flex;
+  margin: auto;
+}
+
+.shadowBoard>div{
+  display: flex;
+  margin: auto;
+}
+
+.shadowBoard{
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-size: 0;
+
+  
+}
