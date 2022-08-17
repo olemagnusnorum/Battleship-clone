@@ -18,7 +18,7 @@ function Game(props){
     
     const rotateShip = () =>{
         console.log("sendt rotate");
-        props.socket.emit('rotate_ship', {"shipNumber": 0});
+        props.socket.emit('rotate_ship', {"shipNumber": currentShip});
     }
 
     const placeShip = () => {
@@ -37,7 +37,6 @@ function Game(props){
 
     useEffect(() => {
         props.socket.emit('initialize_game');
-        // setup shadowBoard
     }, []);
 
     useEffect(() => {
@@ -48,11 +47,32 @@ function Game(props){
             const tile = event.target
             const x = +tile.dataset.x
             const y = +tile.dataset.y
-            if (prev.x !== x || prev.y !== y){
-                // update shadowArray
-                prev.x = x;
-                prev.y = y;
-                console.log(x,y);
+            if (currentShip !== undefined && !shipsPlaced.has(currentShip)){
+                if (prev.x !== x || prev.y !== y){
+                    // update shadowBoard
+                    let updatedShadowBoard = [];
+                    for (let row = 0; row < shadowBoard.length; row++){
+                        let rowShadowBoard = [];
+                        for (let col = 0; col < shadowBoard[row].length; col++){
+                            rowShadowBoard.push(0);
+                        }
+                        updatedShadowBoard.push(rowShadowBoard);
+                    }
+                    console.log(shipsOffsets)
+                    for (let i = 0; i < shipsOffsets[currentShip].length; i++){
+                        let shadowX = x + shipsOffsets[currentShip][i].x
+                        let shadowY = y + shipsOffsets[currentShip][i].y
+                        if (shadowY >= 0 && shadowY < updatedShadowBoard.length && shadowX >= 0 && shadowX < updatedShadowBoard.length){
+                            updatedShadowBoard[shadowY][shadowX] = 1;
+                        }
+                    }
+                    prev.x = x;
+                    prev.y = y;
+                    setShadowBoard(updatedShadowBoard);
+                    console.log(x,y);
+                    console.log(shipsOffsets[currentShip])
+                    console.log(updatedShadowBoard)
+                }
             }
         }
 
@@ -61,20 +81,22 @@ function Game(props){
         return () => {
             boardRef.current?.removeEventListener('mousemove', eventListener);
         };
-    }, [boardRef.current])
+    }, [boardRef.current, currentShip, shipsOffsets])
     
     useEffect(() => {
         props.socket.on('initial_game_state', (data) => {
             console.log(data)
             setBoard(data.board);
-            console.log(data.shipsOffsets)
-            setShipsOffsets(data.shipsOffsets)
+            setShadowBoard(data.board);
+            setShipsOffsets(data.shipsOffsets);
         });
 
         props.socket.on('ship_rotated', (data) => {
             console.log(data.newOffset)
             console.log(data.shipNumber)
-            shipsOffsets[data.shipNumber] = data.newOffset
+            let updatedShipsOffsets = [...shipsOffsets]
+            updatedShipsOffsets[data.shipNumber] = data.newOffset;
+            setShipsOffsets(updatedShipsOffsets);
         });
 
         props.socket.on('ship_placed', (data) => {
@@ -132,42 +154,20 @@ function Game(props){
                 })}
             </div>
             <div className="shadowBoard">
-                <div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                </div>
-                <div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                </div>
-                <div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                    <div className="tileShadow"></div>
-                </div>
+            {shadowBoard?.map((row, rowId) => {
+                    return(
+                        <div key={rowId}>
+                        {row.map((value, columnId) => {
+                            {switch(value){
+                                case 0: 
+                                    return <div className="tileNoShadow" key={columnId} data-x={columnId} data-y={rowId}></div>
+                                case 1:
+                                    return <div className="tileShadow" key={columnId} data-x={columnId} data-y={rowId}></div>
+                                }}
+                            })}
+                        </div>
+                    )
+                })}
             </div>
             </div>
             <div className="boatContainer">
