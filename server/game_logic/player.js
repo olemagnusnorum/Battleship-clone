@@ -33,24 +33,23 @@ export class Player{
         if (shipNumber < this.ships.length){
             var ship = this.ships[shipNumber];
             if (this.board.placeShip(coordinate, ship)){
-                console.log(this.board.board);
                 return {"board": this.board.board, "shipNumber": shipNumber};
             } else {
                 console.log("not a valid ship placement");
-                return {}
+                return {};
             }
         } else {
             console.log("not a valid ship");
-            return {}
+            return {};
         }
     }
 
     allShipsPlaced(){
         for (var i = 0; i < this.ships.length; i++){
             if (this.ships[i].placed == false){
-                print("place all ships")
+                console.log("place all ships")
+                return false;
             }
-            return false;
         }
         return true;
     }

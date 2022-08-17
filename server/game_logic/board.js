@@ -18,17 +18,12 @@ export class Board {
     }
 
     placeShip(coordinate, ship){
-        console.log(coordinate)
         var coordinate_x = coordinate.x;
         var coordinate_y = coordinate.y;
         var placement = [];
         for (var i = 0; i < ship.offsets.length; i++){
-            var placement_x = ship.offsets[i].x + coordinate_x
-            console.log(coordinate_x)
-            console.log(ship.offsets[i].x)
-            var placement_y = ship.offsets[i].y + coordinate_y 
-            console.log(placement_y)
-            console.log(ship.offsets[i].y)
+            var placement_x = ship.offsets[i].x + coordinate_x;
+            var placement_y = ship.offsets[i].y + coordinate_y;
             placement.push({"x":placement_x, "y":placement_y});
         }
 
@@ -82,7 +77,6 @@ export class Board {
     }
 
     checkLegalShipPlacement(placement){
-        console.log(placement)
         for (var i = 0; i < placement.length; i++){
             var x = placement[i].x;
             var y = placement[i].y;
@@ -90,8 +84,6 @@ export class Board {
                 console.log("SHIP out of bound");
                 return false
             }
-            console.log(y)
-            console.log(x)
             if (this.board[y][x] !== this.WATER){
                 console.log("Ship collition with other ship");
                 return false

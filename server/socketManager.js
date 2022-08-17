@@ -71,7 +71,6 @@ class SocketManager {
 
     rotateShip(io, socket, data){
         var shipNumber = data.shipNumber;
-        console.log(shipNumber)
         var room = this.roomManager.getRoom(socket.id);
         var gameController = this.games.get(room);
         var newOffset = gameController.rotateShip(socket.id ,shipNumber);

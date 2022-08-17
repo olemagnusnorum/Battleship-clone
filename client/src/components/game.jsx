@@ -15,14 +15,26 @@ function Game(props){
     const [currentShip, setCurrentShip] = useState();
     const [shadowBoard, setShadowBoard] = useState();
     const boardRef = useRef(null);
+
+    const getEmptyBoard = () => {
+        let updatedShadowBoard = [];
+        for (let row = 0; row < shadowBoard.length; row++){
+            let rowShadowBoard = [];
+            for (let col = 0; col < shadowBoard[row].length; col++){
+                rowShadowBoard.push(0);
+            }
+            updatedShadowBoard.push(rowShadowBoard);
+        }
+        return updatedShadowBoard;
+    }
     
     const rotateShip = () =>{
         console.log("sendt rotate");
         props.socket.emit('rotate_ship', {"shipNumber": currentShip});
     }
 
-    const placeShip = (x, y) => {
-        props.socket.emit('place_ship', {"x": 5, "y": 5, "shipNumber": 0})
+    const placeShip = (x, y, shipNumber) => {
+        props.socket.emit('place_ship', {"x": x, "y": y, "shipNumber": shipNumber})
     }
 
     const  handleSetCurrentShip = (shipId) =>{
@@ -40,25 +52,15 @@ function Game(props){
     }, []);
 
     useEffect(() => { // add mousedown her for å håndtere å plasere en boat
-        console.log(boardRef)
-        console.log(board)
         const mouseMoveListener = (event) => {
-            const rect = boardRef.current?.getBoundingClientRect();
+            //const rect = boardRef.current?.getBoundingClientRect();
             const tile = event.target
             const x = +tile.dataset.x
             const y = +tile.dataset.y
             if (currentShip !== undefined && !shipsPlaced.has(currentShip)){
                 if (prev.x !== x || prev.y !== y){
                     // update shadowBoard
-                    let updatedShadowBoard = [];
-                    for (let row = 0; row < shadowBoard.length; row++){
-                        let rowShadowBoard = [];
-                        for (let col = 0; col < shadowBoard[row].length; col++){
-                            rowShadowBoard.push(0);
-                        }
-                        updatedShadowBoard.push(rowShadowBoard);
-                    }
-                    console.log(shipsOffsets)
+                    let updatedShadowBoard = getEmptyBoard();
                     for (let i = 0; i < shipsOffsets[currentShip].length; i++){
                         let shadowX = x + shipsOffsets[currentShip][i].x
                         let shadowY = y + shipsOffsets[currentShip][i].y
@@ -69,17 +71,24 @@ function Game(props){
                     prev.x = x;
                     prev.y = y;
                     setShadowBoard(updatedShadowBoard);
-                    console.log(x,y);
-                    console.log(shipsOffsets[currentShip])
-                    console.log(updatedShadowBoard)
                 }
             }
         }
 
+        const mouseDownListner = (event) => {
+            const tile = event.target;
+            const x = +tile.dataset.x
+            const y = +tile.dataset.y
+            placeShip(x, y, currentShip);
+            //..... place ship logic thing, remember to fix shadow and stuff
+        }
+
         boardRef.current?.addEventListener('mousemove', mouseMoveListener)
+        boardRef.current?.addEventListener('click', mouseDownListner)
 
         return () => {
             boardRef.current?.removeEventListener('mousemove', mouseMoveListener);
+            boardRef.current?.removeEventListener('click', mouseDownListner);
         };
     }, [boardRef.current, currentShip, shipsOffsets])
     
@@ -101,15 +110,13 @@ function Game(props){
 
         props.socket.on('ship_placed', (data) => {
             if (Object.keys(data).length !== 0){
-
-                console.log(data);
-                shipsPlaced.add(data.shipNumber)
-                var shipOffsets = shipsOffsets[data.shipNumber]
-                for (var i = 0; i < shipOffsets.length; i++){
-                    setBoard(data.board);
-                }
+                shipsPlaced.add(data.shipNumber);
+                setCurrentShip(undefined);
+                setShadowBoard(getEmptyBoard())
+                setBoard(data.board);
             } else {
                 console.log("not valid placement")
+                console.log(data.board);
             }
         })
 
