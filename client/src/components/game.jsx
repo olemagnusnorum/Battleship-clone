@@ -21,7 +21,7 @@ function Game(props){
         props.socket.emit('rotate_ship', {"shipNumber": currentShip});
     }
 
-    const placeShip = () => {
+    const placeShip = (x, y) => {
         props.socket.emit('place_ship', {"x": 5, "y": 5, "shipNumber": 0})
     }
 
@@ -39,10 +39,10 @@ function Game(props){
         props.socket.emit('initialize_game');
     }, []);
 
-    useEffect(() => {
+    useEffect(() => { // add mousedown her for å håndtere å plasere en boat
         console.log(boardRef)
         console.log(board)
-        const eventListener = (event) => {
+        const mouseMoveListener = (event) => {
             const rect = boardRef.current?.getBoundingClientRect();
             const tile = event.target
             const x = +tile.dataset.x
@@ -76,10 +76,10 @@ function Game(props){
             }
         }
 
-        boardRef.current?.addEventListener('mousemove', eventListener)
+        boardRef.current?.addEventListener('mousemove', mouseMoveListener)
 
         return () => {
-            boardRef.current?.removeEventListener('mousemove', eventListener);
+            boardRef.current?.removeEventListener('mousemove', mouseMoveListener);
         };
     }, [boardRef.current, currentShip, shipsOffsets])
     
