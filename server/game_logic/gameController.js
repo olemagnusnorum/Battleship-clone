@@ -9,6 +9,7 @@ export class GameController{
         this.players.set(player2, new Player(player2));
         this.opponentId.set(player1, player2);
         this.opponentId.set(player2, player1);
+        this.playerTurn = player1;
     }
 
     rotateShip(playerId, shipNumber){
@@ -51,6 +52,16 @@ export class GameController{
         var shipsOffsets = player.getShipsOffsets();
         var hitTracker = player.getHitTracker();
         var data = {"board": board, "hitTracker": hitTracker, "shipsOffsets": shipsOffsets};
+        return data;
+    }
+    
+    getPlayerMainGameStates(playerId){
+        var player = this.players.get(playerId);
+        var board = player.getBoard();
+        var hitTracker = player.getHitTracker();
+        var myTurn = this.playerTurn === playerId;
+        var data = {"myTurn" : myTurn, "board": board, "hitTracker": hitTracker};
+        console.log(data);
         return data;
     }
 }

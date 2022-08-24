@@ -2,6 +2,7 @@ import React from "react";
 import { useState} from 'react';
 import { useEffect } from 'react';
 import GameSetup from "./gameSetup";
+import MainGame from "./mainGame";
 import '../css/tile.css'
 import '../css/playerBoard.css'
 import '../css/boatContainer.css'
@@ -22,7 +23,7 @@ function Game(props){
             {!placedAllShips && <GameSetup socket={props.socket} 
             roomNumber={props.roomNumber} 
             setPlacedAllShips={setPlacedAllShips}/>}
-            {placedAllShips && <p>START SHOOTING</p>}
+            {placedAllShips && <MainGame socket={props.socket}/>}
         </div>
     );
 }

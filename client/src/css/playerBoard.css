@@ -1,23 +1,27 @@
 .board{
   position: relative;
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
 
 .playerBoard {
-    text-align: center;
-    background-color: blue;
-    font-size: 0;
+  text-align: center;
+  background-color: blue;
+  font-size: 0;
+  width: 100%;
   }
 .playerBoard>div{
   display: flex;
   margin: auto;
+  height: calc(100%/var(--row));
 }
 
 .shadowBoard>div{
   display: flex;
   margin: auto;
+  height: calc(100%/var(--row));
 }
 
 .shadowBoard{
@@ -28,6 +32,20 @@
   transform: translateX(-50%);
   pointer-events: none;
   font-size: 0;
+  width: 100%;
+  height: 100%;
 
   
+}
+
+.setupBoard{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: red;
+  margin: 10px auto;
+  display: inline-block;
+  vertical-align: top;
+  width: 40%;
+  height: calc(100vw*0.4);
 }

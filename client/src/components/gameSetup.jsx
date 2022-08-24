@@ -152,10 +152,12 @@ function GameSetup(props) {
     return(
         <div>
             <p>THIS IS THE GAME: {props.roomNumber}</p>
+            <div className="setupBoard">
             <PlayerBoard 
             boardRef={boardRef}
             board={board} 
             shadowBoard={shadowBoard} />
+            </div>
             <BoatContainer 
             shipsOffsets={shipsOffsets} 
             handleSetCurrentShip={handleSetCurrentShip}/>

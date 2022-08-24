@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
         socketManager.send_message(io, socket, data)
     });
 
-    //needed connections
+    
     socket.on('initialize_game', (data) => {
         socketManager.initializeGame(io, socket, data)
     })
@@ -48,6 +48,11 @@ io.on('connection', (socket) => {
     socket.on('place_missile', (data) => {
         socketManager.placeMissile(io, socket, data)
     });
+
+    socket.on('initialize_main_game', (data) => {
+        socketManager.initializeMainGame(io, socket, data);
+    })
+
 
 });
 

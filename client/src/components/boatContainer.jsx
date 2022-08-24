@@ -5,6 +5,8 @@ import '../css/boatContainer.css'
 
 function BoatContainer(props) {
 
+    
+
     return (
         <div className="boatContainer">
             {props.shipsOffsets.map((shipOffset, shipOffsetId) => {

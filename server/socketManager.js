@@ -68,6 +68,13 @@ class SocketManager {
         var data = gameController.getPlayerGameStates(socket.id);
         socket.emit('initial_game_state', data);
     }
+    
+    initializeMainGame(io, socket, data){
+        var room = this.roomManager.getRoom(socket.id);
+        var gameController = this.games.get(room);
+        var data = gameController.getPlayerMainGameStates(socket.id);
+        socket.emit('initial_main_game_state', data);
+    }
 
     rotateShip(io, socket, data){
         var shipNumber = data.shipNumber;
@@ -92,6 +99,7 @@ class SocketManager {
         }
 
     }
+
 
 }
 

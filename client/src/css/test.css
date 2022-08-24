@@ -1,0 +1,27 @@
+.boardContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.bigBoard{
+    background-color: red;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    width: 40%;
+    height: calc(100vw*0.4);
+}
+
+.samllBoard{
+    background-color: blue;
+    margin: 10px;   
+    width: 400px;
+    height: 400px;
+    display: inline-block; 
+    vertical-align: top;
+    
+}
+
