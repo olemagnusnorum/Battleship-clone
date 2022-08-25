@@ -11,13 +11,13 @@ export class Player{
     }
 
     placeMissile(coordinate){
-        result = this.board.placeMissile(coordinate)
+        var result = this.board.placeMissile(coordinate)
         return result;
     }
 
     updateHitTracker(coordinates){ // map of what coordinate(string) and value
         for (let coordinate of coordinates){
-            var stringCoordinate = coordinate[0];
+            var stringCoordinate = coordinate[0].split(",");
             var value = coordinate[1];
             var x = parseInt(stringCoordinate[0]);
             var y = parseInt(stringCoordinate[1]);

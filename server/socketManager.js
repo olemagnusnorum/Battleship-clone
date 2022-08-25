@@ -106,8 +106,11 @@ class SocketManager {
         var room = this.roomManager.getRoom(socket.id);
         var gameController = this.games.get(room);
         var coordinate = {x, y};
-        var newHitTracker = gameController.placeMissile(socket.id, coordinate)
-        socket.emit('missile_placed', newHitTracker);
+        var data = gameController.placeMissile(socket.id, coordinate);
+        var playerData = {"hitTracker": data.playerHitTracker, "myTurn": data.playerTurn};
+        var opponentData = {"board": data.opponentBoard, "myTurn": data.opponentTurn};
+        socket.emit('missile_placed', playerData);
+        socket.broadcast.to(room).emit('missile_struck', opponentData);
     }
 
 

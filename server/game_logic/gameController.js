@@ -34,13 +34,20 @@ export class GameController{
     }
 
     placeMissile(playerId, coordinate){
-        var player = this.players.get(playerId);
-        var opponentId = this.opponentId.get(playerId);
-        var opponent = this.players.get(opponentId);
-        // place missile on opponent and give back result (uppdate board of opponent)
-        // update the hitTracker off the player
-        // update player turn internaly
-        // maker object to return with opponent board hit tracker and turn = true/false
+        if (this.playerTurn === playerId){
+            var player = this.players.get(playerId);
+            var opponentId = this.opponentId.get(playerId);
+            var opponent = this.players.get(opponentId);
+            // place missile on opponent and give back result (uppdate board of opponent)
+            var result = opponent.placeMissile(coordinate);
+            // update the hitTracker off the player
+            player.updateHitTracker(result);
+            // update player turn internaly
+            this.playerTurn = opponentId;
+            // maker object to return with opponent board hit tracker and turn = true/false
+            var data = {"playerHitTracker": player.hitTracker, "playerTurn": false, "opponentBoard": opponent.board.board, "opponentTurn": true}
+            return data
+        }
     }
 
     getPlayerGameStates(playerId){

@@ -54,6 +54,8 @@ function MainGame(props){
                     prev.y = y;
                     setShadowBoard(updatedShadowBoard);
                 }
+            } else {
+                setShadowBoard(getEmptyBoard()) // quick fix, change this
             }
         }
 
@@ -71,7 +73,7 @@ function MainGame(props){
             hitTrackerRef.current?.removeEventListener('mousemove', mouseMoveListener);
             hitTrackerRef.current?.removeEventListener('click', leftMouseClickListener);
         };
-    })
+    },)
 
     useEffect(() => {
         props.socket.on('initial_main_game_state', (data) => {
@@ -81,7 +83,20 @@ function MainGame(props){
             setMyTurn(data.myTurn);
             setShadowBoard(data.hitTracker)
         })
-    }, [props.socket])
+
+        props.socket.on('missile_placed', (data) => {
+            console.log(data);
+            setMyTurn(data.myTurn);
+            setHitTracker(data.hitTracker);
+        })
+
+        props.socket.on('missile_struck', (data) => {
+            console.log(data);
+            setMyTurn(data.myTurn);
+            setBoard(data.board);
+
+        })
+    }, [props.socket, myTurn, hitTracker, board])
 
     return (
         <div>
