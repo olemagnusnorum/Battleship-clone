@@ -32,7 +32,6 @@ function GameSetup(props) {
     }
     
     const rotateShip = () =>{
-        console.log("sendt rotate");
         props.socket.emit('rotate_ship', {"shipNumber": currentShip});
     }
 
@@ -56,16 +55,16 @@ function GameSetup(props) {
 
     useEffect(() => {
         const mouseMoveListener = (event) => {
-            const tile = event.target
-            const x = +tile.dataset.x
-            const y = +tile.dataset.y
+            const tile = event.target;
+            const x = +tile.dataset.x;
+            const y = +tile.dataset.y;
             if (currentShip !== undefined && !shipsPlaced.has(currentShip)){
                 if (prev.x !== x || prev.y !== y){
                     // update shadowBoard
                     let updatedShadowBoard = getEmptyBoard();
                     for (let i = 0; i < shipsOffsets[currentShip].length; i++){
-                        let shadowX = x + shipsOffsets[currentShip][i].x
-                        let shadowY = y + shipsOffsets[currentShip][i].y
+                        let shadowX = x + shipsOffsets[currentShip][i].x;
+                        let shadowY = y + shipsOffsets[currentShip][i].y;
                         if (shadowY >= 0 && shadowY < updatedShadowBoard.length && shadowX >= 0 && shadowX < updatedShadowBoard.length){
                             updatedShadowBoard[shadowY][shadowX] = 1;
                         }

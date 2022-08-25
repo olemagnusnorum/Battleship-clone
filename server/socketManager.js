@@ -100,6 +100,16 @@ class SocketManager {
 
     }
 
+    placeMissile(io, socket, data){
+        var x = data.x;
+        var y = data.y;
+        var room = this.roomManager.getRoom(socket.id);
+        var gameController = this.games.get(room);
+        var coordinate = {x, y};
+        var newHitTracker = gameController.placeMissile(socket.id, coordinate)
+        socket.emit('missile_placed', newHitTracker);
+    }
+
 
 }
 
