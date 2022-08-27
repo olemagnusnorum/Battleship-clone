@@ -54,6 +54,10 @@ export class Player{
         return true;
     }
 
+    allShipsSunk(){
+        return this.board.checkGameOver();
+    }
+
     printShipsNotPlaced(){
         for (var i = 0; i < this.ships.length; i++){
             if (this.ships[i].placed === false){

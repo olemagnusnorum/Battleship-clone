@@ -93,9 +93,10 @@ export class Board {
     }
 
     checkGameOver(){
+        this.printBoard();
         for (var y = 0; y < this.board.length; y++){
-            for (var x = 0; x < this.board.length[y]; x++){
-                if (this.board[y][x] == this.SHIP){
+            for (var x = 0; x < this.board[y].length; x++){
+                if (this.board[y][x] === this.SHIP){
                     return false
                 }
             }

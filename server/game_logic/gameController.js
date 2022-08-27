@@ -24,13 +24,20 @@ export class GameController{
         return newBoard
     }
 
-    allShipsPlaced(playerId, opponentId){
+    allShipsPlaced(playerId){
+        var opponentId = this.opponentId.get(playerId);
         var player1 = this.players.get(playerId);
-        var player2 = this.players.get(opponentId);
-        if (player1.allShipsPlaced() && player2.allShipsPlaced()){
+        var opponent = this.players.get(opponentId);
+        if (player1.allShipsPlaced() && opponent.allShipsPlaced()){
             return true;
         }
         return false;
+    }
+
+    allShipsSunk(playerId){
+        var opponentId = this.opponentId.get(playerId);
+        var opponent = this.players.get(opponentId);
+        return opponent.allShipsSunk();
     }
 
     placeMissile(playerId, coordinate){
@@ -70,7 +77,6 @@ export class GameController{
         var hitTracker = player.getHitTracker();
         var myTurn = this.playerTurn === playerId;
         var data = {"myTurn" : myTurn, "board": board, "hitTracker": hitTracker};
-        console.log(data);
         return data;
     }
 }

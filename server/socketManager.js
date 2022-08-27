@@ -94,7 +94,7 @@ class SocketManager {
         var coordinate = {x,y}
         var newBoard = gameController.placeShip(socket.id, coordinate, shipNumber);
         socket.emit('ship_placed', newBoard);
-        if (gameController.allShipsPlaced(socket.id, gameController.opponentId.get(socket.id))){
+        if (gameController.allShipsPlaced(socket.id)){
             io.in(room).emit('placing_finnished');
         }
 
@@ -112,6 +112,12 @@ class SocketManager {
             var opponentData = {"board": data.opponentBoard, "myTurn": data.opponentTurn};
             socket.emit('missile_placed', playerData);
             socket.broadcast.to(room).emit('missile_struck', opponentData);
+            // if all ships sunk
+            if (gameController.allShipsSunk(socket.id)){
+                console.log("GAME OVER")
+                socket.emit('game_over', {"win": true});
+                socket.broadcast.to(room).emit('game_over', {"win": false});
+            }
         } else {
             console.log("not your turn or not valid placement")
         }

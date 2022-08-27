@@ -59,8 +59,8 @@ function MainGame(props){
 
         const leftMouseClickListener = (event) => {
             const tile = event.target;
-            const x = +tile.dataset.x
-            const y = +tile.dataset.y
+            const x = +tile.dataset.x;
+            const y = +tile.dataset.y;
             placeMissile(x, y);
         }
 
@@ -79,7 +79,7 @@ function MainGame(props){
             setHitTracker(data.hitTracker);
             setBoard(data.board);
             setMyTurn(data.myTurn);
-            setShadowBoard(data.hitTracker)
+            setShadowBoard(data.hitTracker);
         })
 
         props.socket.on('missile_placed', (data) => {
@@ -92,13 +92,22 @@ function MainGame(props){
             console.log(data);
             setMyTurn(data.myTurn);
             setBoard(data.board);
-
         })
+
+        props.socket.on('game_over', (data) => {
+            console.log("all ships sunk")
+            if (data.win === true){
+                console.log("you won");
+            } else {
+                console.log("you lost");
+            }
+        })
+
     }, [props.socket])
 
     useEffect(() => {
         if (myTurn === false){
-            setShadowBoard(getEmptyBoard())
+            setShadowBoard(getEmptyBoard());
         }
     }, [myTurn])
 
