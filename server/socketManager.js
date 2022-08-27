@@ -107,10 +107,14 @@ class SocketManager {
         var gameController = this.games.get(room);
         var coordinate = {x, y};
         var data = gameController.placeMissile(socket.id, coordinate);
-        var playerData = {"hitTracker": data.playerHitTracker, "myTurn": data.playerTurn};
-        var opponentData = {"board": data.opponentBoard, "myTurn": data.opponentTurn};
-        socket.emit('missile_placed', playerData);
-        socket.broadcast.to(room).emit('missile_struck', opponentData);
+        if (Object.keys(data).length > 0){
+            var playerData = {"hitTracker": data.playerHitTracker, "myTurn": data.playerTurn};
+            var opponentData = {"board": data.opponentBoard, "myTurn": data.opponentTurn};
+            socket.emit('missile_placed', playerData);
+            socket.broadcast.to(room).emit('missile_struck', opponentData);
+        } else {
+            console.log("not your turn or not valid placement")
+        }
     }
 
 

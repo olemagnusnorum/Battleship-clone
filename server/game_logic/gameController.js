@@ -40,6 +40,10 @@ export class GameController{
             var opponent = this.players.get(opponentId);
             // place missile on opponent and give back result (uppdate board of opponent)
             var result = opponent.placeMissile(coordinate);
+            // if result is empty (aka not valid coordinates) return empty
+            if (result.size === 0){
+                return {}
+            }
             // update the hitTracker off the player
             player.updateHitTracker(result);
             // update player turn internaly
@@ -48,6 +52,7 @@ export class GameController{
             var data = {"playerHitTracker": player.hitTracker, "playerTurn": false, "opponentBoard": opponent.board.board, "opponentTurn": true}
             return data
         }
+        return {}
     }
 
     getPlayerGameStates(playerId){

@@ -13,7 +13,7 @@ let prev = {"x": null, "y": null};
 function MainGame(props){
 
     const [hitTracker, setHitTracker] = useState();
-    const [shadowBoard, setShadowBoard] = useState();
+    const [shadowBoard, setShadowBoard] = useState(null);
     const [board, setBoard] = useState();
     const [myTurn, setMyTurn] = useState();
     const hitTrackerRef = useRef(null);
@@ -54,8 +54,6 @@ function MainGame(props){
                     prev.y = y;
                     setShadowBoard(updatedShadowBoard);
                 }
-            } else {
-                setShadowBoard(getEmptyBoard()) // quick fix, change this
             }
         }
 
@@ -96,7 +94,13 @@ function MainGame(props){
             setBoard(data.board);
 
         })
-    }, [props.socket, myTurn, hitTracker, board])
+    }, [props.socket])
+
+    useEffect(() => {
+        if (myTurn === false){
+            setShadowBoard(getEmptyBoard())
+        }
+    }, [myTurn])
 
     return (
         <div>
