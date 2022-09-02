@@ -4,6 +4,7 @@ import React from "react";
 import Lobby from './lobby';
 import Game from './game';
 import io from 'socket.io-client';
+
 const socket = io.connect('http://localhost:3000');
 socket.emit('create_room', '0');
 

@@ -17,5 +17,3 @@ class Lobby extends Component {
 }
 
 export default Lobby
-
-//https://codepen.io/Wyper/pen/rNjrxrG
