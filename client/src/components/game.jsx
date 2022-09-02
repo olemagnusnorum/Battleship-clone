@@ -3,9 +3,6 @@ import { useState} from 'react';
 import { useEffect } from 'react';
 import GameSetup from "./gameSetup";
 import MainGame from "./mainGame";
-import '../css/tile.css'
-import '../css/playerBoard.css'
-import '../css/boatContainer.css'
 import GameOver from "./gameOver";
 
 function Game(props){
