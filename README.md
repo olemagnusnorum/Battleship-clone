@@ -1,2 +1,2 @@
 # Battleship-clone
-A battleship clone that runs over the web with Django and React
+A socket based battleship clone writen in javascript with react and socket.io
