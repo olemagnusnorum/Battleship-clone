@@ -19,7 +19,7 @@ class RoomManager {
     }
     
     removeRoom(room){
-        this.rooms.delete(room);
+        this.rooms.devare(room);
     }
 
     generateNewRoomId(){

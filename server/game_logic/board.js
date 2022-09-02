@@ -80,7 +80,7 @@ export class Board {
         for (var i = 0; i < placement.length; i++){
             var x = placement[i].x;
             var y = placement[i].y;
-            if (x < 0 || y < 0){
+            if (x < 0 || y < 0 || x >= this.board.length || y >= this.board.length){
                 console.log("SHIP out of bound");
                 return false
             }

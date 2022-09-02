@@ -16,7 +16,7 @@ export class Player{
     }
 
     updateHitTracker(coordinates){ // map of what coordinate(string) and value
-        for (let coordinate of coordinates){
+        for (var coordinate of coordinates){
             var stringCoordinate = coordinate[0].split(",");
             var value = coordinate[1];
             var x = parseInt(stringCoordinate[0]);
