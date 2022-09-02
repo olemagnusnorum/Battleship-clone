@@ -100,8 +100,8 @@ function MainGame(props){
 
     return (
         <div className="mainGame">
-            {myTurn && <p>YOUR TURN</p>}
-            {!myTurn && <p>NOT YOUR TURN</p>}
+            {myTurn && <p>PLACE MISSILE</p>}
+            {!myTurn && <p>OPPONENT PLAING MISSILE</p>}
             <div className="boardContainer">
                 <div className="bigBoard">
                 <PlayerBoard 

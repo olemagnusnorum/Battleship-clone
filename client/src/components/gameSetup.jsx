@@ -148,7 +148,7 @@ function GameSetup(props) {
 
     return(
         <div className="gameSetup">
-            <p>THIS IS THE GAME: {props.roomNumber}</p>
+            <p>PLACE YOUR SHIPS</p>
             <div className="setupBoard">
             <PlayerBoard 
             boardRef={boardRef}
