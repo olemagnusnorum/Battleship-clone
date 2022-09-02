@@ -34,7 +34,7 @@ function Game(props){
             roomNumber={props.roomNumber} 
             setPlacedAllShips={setPlacedAllShips}/>}
             {placedAllShips && !gameOver && <MainGame socket={props.socket}/>}
-            {placedAllShips && gameOver && <GameOver/>}
+            {placedAllShips && gameOver && <GameOver win={win}/>}
         </div>
     );
 }
