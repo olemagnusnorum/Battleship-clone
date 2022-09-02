@@ -1,17 +1,18 @@
 .tileWater {
     background-color: white;
+    background-color: rgb(68, 71, 90);
 }
 
 .tileShip {
-    background-color: rgb(49, 67, 225);
+    background-color: rgb(51, 158, 78);
 }
 
 .tileMiss {
-    background-color: rgb(156, 33, 33);
+    background-color: rgb(139, 233, 253);
 }
 
 .tileHit {
-    background-color: rgb(8, 3, 3);
+    background-color: rgb(255, 85, 85);
 }
 
 .tileSunk {
@@ -27,6 +28,6 @@
 .tile {
     width: calc(100%/var(--col));
     height: calc(100%);
-    border: 1px solid rgba(144, 175, 175, 0.75);
+    border: 1px solid black;
     display: inline-block;
 }

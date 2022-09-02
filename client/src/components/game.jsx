@@ -6,24 +6,35 @@ import MainGame from "./mainGame";
 import '../css/tile.css'
 import '../css/playerBoard.css'
 import '../css/boatContainer.css'
+import GameOver from "./gameOver";
 
 function Game(props){
 
     const [placedAllShips, setPlacedAllShips] = useState(false);
+
+    const [gameOver, setGameOver] = useState(false);
+
+    const [win, setWin] = useState(null);
    
     useEffect(() => {
         props.socket.on('placing_finnished', () => {
             setPlacedAllShips(true);
+        })
+
+        props.socket.on('game_over', (data) => {
+            setGameOver(true);
+            setWin(data.win);
         })
     })
     
     
     return(
         <div>
-            {!placedAllShips && <GameSetup socket={props.socket} 
+            {!placedAllShips && !gameOver && <GameSetup socket={props.socket} 
             roomNumber={props.roomNumber} 
             setPlacedAllShips={setPlacedAllShips}/>}
-            {placedAllShips && <MainGame socket={props.socket}/>}
+            {placedAllShips && !gameOver && <MainGame socket={props.socket}/>}
+            {placedAllShips && gameOver && <GameOver/>}
         </div>
     );
 }

@@ -3,9 +3,7 @@ import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import PlayerBoard from "./playerBoard";
 import BoatContainer from "./boatContainer";
-import '../css/tile.css'
-import '../css/playerBoard.css'
-import '../css/boatContainer.css'
+import '../css/gameSetup.css'
 
 let prev = {"x": null, "y": null};
 
@@ -149,7 +147,7 @@ function GameSetup(props) {
     }, [props.socket, shipsOffsets, board]);
 
     return(
-        <div>
+        <div className="gameSetup">
             <p>THIS IS THE GAME: {props.roomNumber}</p>
             <div className="setupBoard">
             <PlayerBoard 
@@ -159,6 +157,7 @@ function GameSetup(props) {
             </div>
             <BoatContainer 
             shipsOffsets={shipsOffsets} 
+            shipsPlaced={shipsPlaced}
             handleSetCurrentShip={handleSetCurrentShip}/>
         </div>
     );

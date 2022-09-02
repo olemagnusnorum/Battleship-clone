@@ -112,7 +112,6 @@ class SocketManager {
             var opponentData = {"board": data.opponentBoard, "myTurn": data.opponentTurn};
             socket.emit('missile_placed', playerData);
             socket.broadcast.to(room).emit('missile_struck', opponentData);
-            // if all ships sunk
             if (gameController.allShipsSunk(socket.id)){
                 console.log("GAME OVER")
                 socket.emit('game_over', {"win": true});

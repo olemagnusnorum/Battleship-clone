@@ -2,11 +2,7 @@ import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import PlayerBoard from "./playerBoard";
-import BoatContainer from "./boatContainer";
-import '../css/tile.css'
-import '../css/playerBoard.css'
-import '../css/boatContainer.css'
-import '../css/test.css'
+import '../css/mainGame.css'
 
 let prev = {"x": null, "y": null};
 
@@ -94,15 +90,6 @@ function MainGame(props){
             setBoard(data.board);
         })
 
-        props.socket.on('game_over', (data) => {
-            console.log("all ships sunk")
-            if (data.win === true){
-                console.log("you won");
-            } else {
-                console.log("you lost");
-            }
-        })
-
     }, [props.socket])
 
     useEffect(() => {
@@ -112,7 +99,7 @@ function MainGame(props){
     }, [myTurn])
 
     return (
-        <div>
+        <div className="mainGame">
             {myTurn && <p>YOUR TURN</p>}
             {!myTurn && <p>NOT YOUR TURN</p>}
             <div className="boardContainer">

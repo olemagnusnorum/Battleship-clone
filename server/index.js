@@ -32,7 +32,6 @@ io.on('connection', (socket) => {
         socketManager.send_message(io, socket, data)
     });
 
-    
     socket.on('initialize_game', (data) => {
         socketManager.initializeGame(io, socket, data)
     })

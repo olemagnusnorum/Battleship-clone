@@ -1,6 +1,4 @@
 import React from "react";
-import '../css/tile.css'
-import '../css/playerBoard.css'
 import '../css/boatContainer.css'
 
 function BoatContainer(props) {
@@ -11,7 +9,7 @@ function BoatContainer(props) {
         <div className="boatContainer">
             {props.shipsOffsets.map((shipOffset, shipOffsetId) => {
                 return(
-                    <button onClick={() => props.handleSetCurrentShip(shipOffsetId)}>{shipOffsetId}</button>
+                    <button disabled={props.shipsPlaced.has(shipOffsetId)? true : false} onClick={() => props.handleSetCurrentShip(shipOffsetId)}>{"SHIP " + shipOffsetId}</button>
                 )
             })}
         </div>

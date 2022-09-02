@@ -37,9 +37,9 @@ export class Board {
         
         for (var i = 0; i < placement.length; i++){
             var key = placement[i].x + "," + placement[i].y;
-            this.shipDict[key] = ship; 
+            this.shipDict.set(key, ship); 
         }
-        this.shipCoordinates[ship] = placement;
+        this.shipCoordinates.set(ship, placement);
         ship.placed = true;
         return true
     }
@@ -64,13 +64,13 @@ export class Board {
     }
 
     sinkShip(ship){
-        affectedCoordinates = new Map();
-        coordinates = this.shipCoordinates.get(ship);
+        var affectedCoordinates = new Map();
+        var coordinates = this.shipCoordinates.get(ship);
         for (var i = 0; i < coordinates.length; i++){
-            var x = coordinates.x;
-            var y = coordinates.y;
+            var x = coordinates[i].x;
+            var y = coordinates[i].y;
             this.board[y][x] = this.HOLE_SHIP_SUNK;
-            key = x + "," + y;
+            var key = x + "," + y;
             affectedCoordinates.set(key, this.HOLE_SHIP_SUNK);
         }
         return affectedCoordinates;
@@ -93,7 +93,6 @@ export class Board {
     }
 
     checkGameOver(){
-        this.printBoard();
         for (var y = 0; y < this.board.length; y++){
             for (var x = 0; x < this.board[y].length; x++){
                 if (this.board[y][x] === this.SHIP){
